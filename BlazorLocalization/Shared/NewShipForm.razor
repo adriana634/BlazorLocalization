@@ -1,0 +1,74 @@
+﻿@using BlazorLocalization.Models
+@using Microsoft.Extensions.Logging
+@inject ILogger<NewShipForm> Logger
+@inject IStringLocalizer<App> Localize
+
+<h1>@Localize["Starfleet Starship Database"]</h1>
+
+<h2>@Localize["New Ship Entry Form"]</h2>
+
+<EditForm Model="@starship" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            @Localize["Identifier"]:
+            <InputText @bind-Value="starship.Identifier" />
+        </label>
+    </p>
+    <p>
+        <label>
+            @Localize["Description"] (@Localize["optional"]):
+            <InputTextArea @bind-Value="starship.Description" />
+        </label>
+    </p>
+    <p>
+        <label>
+            @Localize["Classification"]:
+            <InputSelect @bind-Value="starship.Classification">
+                <option value="">@Localize["Select classification ..."]</option>
+                <option value="Exploration">@Localize["Exploration"]</option>
+                <option value="Diplomacy">@Localize["Diplomacy"]</option>
+                <option value="Defense">@Localize["Defense"]</option>
+            </InputSelect>
+        </label>
+    </p>
+    <p>
+        <label>
+            @Localize["MaximumAccommodation"]:
+            <InputNumber @bind-Value="starship.MaximumAccommodation" />
+        </label>
+    </p>
+    <p>
+        <label>
+            @Localize["EngineeringApproval"]:
+            <InputCheckbox @bind-Value="starship.IsValidatedDesign" />
+        </label>
+    </p>
+    <p>
+        <label>
+            @Localize["ProductionDate"]:
+            <InputDate @bind-Value="starship.ProductionDate" />
+        </label>
+    </p>
+
+    <button type="submit">@Localize["Submit"]</button>
+
+    <p>
+        <a href="https://intl.startrek.com/">Star Trek</a>,
+        ©1966-2019 CBS Studios, Inc. and
+        <a href="https://www.paramount.com">Paramount Pictures</a>
+    </p>
+</EditForm>
+
+@code {
+    private Starship starship = new() { ProductionDate = DateTime.UtcNow };
+
+    private void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+
+        // Process the valid form
+    }
+}
